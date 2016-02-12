@@ -9,7 +9,7 @@ from twisted.web.client import HTTPConnectionPool
 from twisted.web.http_headers import Headers
 from twisted.internet.task import Clock
 
-from heatherrd.relay.relay import Relay, RelaySite, RelayProtocol, RelayFactory
+from heatherrd.relay import Relay, RelaySite, RelayProtocol, RelayFactory
 
 import treq
 
@@ -23,9 +23,9 @@ class RelayTest(TestCase):
         self.addCleanup(self.pool.closeCachedConnections)
 
     @inlineCallbacks
-    def mk_relay(self, heatherr_url='http://www.example.org'):
+    def mk_relay(self, url='http://www.example.org'):
         endpoint = serverFromString(reactor, 'tcp:0')
-        relay = Relay(heatherr_url)
+        relay = Relay(url)
         site = relay.app.resource()
         port = yield endpoint.listen(RelaySite(site))
         url = 'http://127.0.0.1:%s' % (port.getHost().port,)
@@ -34,12 +34,12 @@ class RelayTest(TestCase):
 
     def test_auth(self):
         r = Relay('http://username:password@example.org')
-        self.assertEqual(r.heatherr_url, 'http://example.org')
+        self.assertEqual(r.url, 'http://example.org')
         self.assertEqual(r.auth, ('username', 'password'))
 
     def test_no_auth(self):
         r = Relay('http://example.org')
-        self.assertEqual(r.heatherr_url, 'http://example.org')
+        self.assertEqual(r.url, 'http://example.org')
         self.assertEqual(r.auth, None)
 
     @inlineCallbacks
