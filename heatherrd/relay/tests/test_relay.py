@@ -9,7 +9,7 @@ from twisted.web.client import HTTPConnectionPool
 from twisted.web.http_headers import Headers
 from twisted.internet.task import Clock
 
-from heatherr.relay.relay import Relay, RelaySite, RelayProtocol, RelayFactory
+from heatherrd.relay.relay import Relay, RelaySite, RelayProtocol, RelayFactory
 
 import treq
 
