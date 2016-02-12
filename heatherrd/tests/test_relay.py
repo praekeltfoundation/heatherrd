@@ -48,7 +48,8 @@ class RelayTest(TestCase):
         r.get_protocol = Mock()
         r.get_protocol.return_value = succeed(RelayProtocol({
             'self': {
-                'id': 'the-user-id'
+                'id': 'the-user-id',
+                'name': 'thebotuser',
             }
         }))
 
@@ -60,6 +61,7 @@ class RelayTest(TestCase):
         self.assertEqual(data, {
             'self': {
                 'id': 'the-user-id',
+                'name': 'thebotuser',
             },
         })
         r.get_protocol.assert_called_with(
@@ -70,7 +72,8 @@ class RelayTest(TestCase):
         url, r = yield self.mk_relay()
         protocol = RelayProtocol({
             'self': {
-                'id': 'the-user-id'
+                'id': 'the-user-id',
+                'name': 'thebotuser',
             }
         })
         protocol.transport = StringTransport()
@@ -91,7 +94,8 @@ class RelayTest(TestCase):
         _, r = yield self.mk_relay()
         mock_proto = RelayProtocol({
             'self': {
-                'id': 'the-user-id'
+                'id': 'the-user-id',
+                'name': 'thebotuser',
             },
         })
         r.rtm_start = Mock()
@@ -149,7 +153,7 @@ class RelayTest(TestCase):
         mock_post.return_value = succeed(mock_response)
 
         _, r = yield self.mk_relay('http://username:password@example.com/foo')
-        r.relay('user-id', {'foo': 'bar'})
+        r.relay('user-id', 'bot-name', {'foo': 'bar'})
 
         mock_post.assert_called_with(
             'http://example.com/foo',
@@ -158,6 +162,7 @@ class RelayTest(TestCase):
             headers={
                 'Content-Type': 'application/json',
                 'X-Bot-User-Id': 'user-id',
+                'X-Bot-User-Name': 'bot-name',
             },
             timeout=2)
 
@@ -185,7 +190,7 @@ class RelayTest(TestCase):
 
         r.connections['user-id'] = mock_protocol
 
-        yield r.relay('user-id', {'foo': 'bar'})
+        yield r.relay('user-id', 'user-name', {'foo': 'bar'})
 
         mock_protocol.send_message.assert_called_with({
             'text': 'the-outbound-reply'
@@ -219,12 +224,14 @@ class RelayTest(TestCase):
         protocol = RelayProtocol({
             'self': {
                 'id': 'the-user-id',
+                'name': 'thebotuser',
             }
         })
         protocol.relay = relay
         protocol.bot_user_id = 'the-user-id'
         protocol.onMessage('{"foo": "bar"}', False)
-        relay.relay.assert_called_with('the-user-id', {"foo": "bar"})
+        relay.relay.assert_called_with(
+            'the-user-id', 'thebotuser', {"foo": "bar"})
 
     @inlineCallbacks
     def test_protocol_close(self):
@@ -233,6 +240,7 @@ class RelayTest(TestCase):
         protocol = RelayProtocol({
             'self': {
                 'id': 'the-user-id',
+                'name': 'thebotuser',
             },
         })
         protocol.factory = Mock()
@@ -248,6 +256,7 @@ class RelayTest(TestCase):
         protocol = RelayProtocol({
             'self': {
                 'id': 'the-user-id',
+                'name': 'thebotuser',
             },
         })
         protocol.clock = Clock()
@@ -264,7 +273,8 @@ class RelayTest(TestCase):
         factory = RelayFactory('dummy relay', {
             'url': 'wss://foo/',
             'self': {
-                'id': 'bot-user-id'
+                'id': 'bot-user-id',
+                'name': 'thebotuser',
             }
         })
         protocol = factory.buildProtocol('addr')

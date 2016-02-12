@@ -37,6 +37,7 @@ class RelayProtocol(RTMProtocol):
         RTMProtocol.__init__(self)
         self.session_data = session_data
         self.bot_user_id = session_data['self']['id']
+        self.bot_user_name = session_data['self']['name']
         self.lc = None
         self.relay = None
 
@@ -55,7 +56,7 @@ class RelayProtocol(RTMProtocol):
 
     def onMessage(self, payload, isBinary):
         data = json.loads(payload)
-        self.relay.relay(self.bot_user_id, data)
+        self.relay.relay(self.bot_user_id, self.bot_user_name, data)
 
     def send_ping(self):
         return self.send_message({
@@ -185,7 +186,7 @@ class Relay(object):
             RelayFactory(self, data, debug=self.debug))
 
     @inlineCallbacks
-    def relay(self, bot_user_id, payload):
+    def relay(self, bot_user_id, bot_user_name, payload):
         response = yield treq.post(
             self.url,
             auth=self.auth,
@@ -193,6 +194,7 @@ class Relay(object):
             headers={
                 'Content-Type': 'application/json',
                 'X-Bot-User-Id': bot_user_id,
+                'X-Bot-User-Name': bot_user_name,
             },
             timeout=2)
         headers = response.headers
