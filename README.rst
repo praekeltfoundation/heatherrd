@@ -22,7 +22,7 @@ A simple Python microservice that turns RTM into a synchronous HTTP interface.
 
     $ curl --user <bot-user-id>:<bot-access-token> http://localhost:8001/connect
 
-I'll maintain the RTM connections for the bot and relay incoming RTM messages
+It'll maintain the RTM connections for the bot and relay incoming RTM messages
 as JSON to the URL provided.
 
 The URL can echo a list of RTM responses as JSON which will be sent back
