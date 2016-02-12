@@ -42,5 +42,8 @@ setup(
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Programming Language :: Python :: 2.7',
-    ]
+    ],
+    entry_points={
+        'console_scripts': ['heatherrd = heatherrd.server:run'],
+    },
 )

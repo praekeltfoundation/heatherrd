@@ -36,7 +36,3 @@ def run(listen, heatherr_url, verbose, debug, logfile):
     site.verbose = verbose
     endpoint.listen(site)
     reactor.run()
-
-
-if __name__ == '__main__':
-    run()
