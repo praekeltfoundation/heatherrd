@@ -1,0 +1,33 @@
+sudo: false
+language: python
+python:
+  - "2.7"
+cache:
+  directories:
+    - $HOME/.pip-cache/
+
+env:
+  - TZ=UTC
+
+install:
+  - pip install coveralls
+  - pip install wheel
+  - pip install -r requirements-dev.txt
+  - pip install -e .
+
+script:
+  - flake8
+  - py.test --cov=heatherrd --cov-report=term
+
+after_success:
+  - coveralls
+
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: smn
+  password:
+    secure: "generate with travis encrypt"
+  on:
+    tags: true
+    all_branches: true
