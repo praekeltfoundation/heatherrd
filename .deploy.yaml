@@ -1,4 +1,5 @@
-buildscript: sideloader/build.sh
-postinstall: sideloader/postinstall.sh
+name: heatherrd
+buildscript: scripts/build_script.sh
+postinstall: scripts/post_install.sh
 pip: []
 dependencies: []
