@@ -27,7 +27,7 @@ deploy:
   distributions: sdist bdist_wheel
   user: smn
   password:
-    secure: "generate with travis encrypt"
+    secure: "L6KKhmTd0YIjFTR+N1RCH7S81+kx1JfyjjjmmhgqB2dd4xKqQEHHiinF85t9ESbt4mq29pFZ9ocAWDinRvdIwCmQwE/ggIZUHzNZx08Q5iCVYlKHE9N0YE+mKOoKavCSBe4qBF1gyLeA6haLrd7fWT66Oukndsf+6AAcdOzC/hxQY71Ir1nNmtFKHh8kskbKSqVT9NC9mmb0TCJv2h+SvIdJYvbcfBIWyorSisS7WG3qLayLsNLbA1fFGZZjT2NR/08lEnlaL79N2TUap/EMF+zgo5yNtDko2pDFnVMAtHBuO4ceW6P1CJ7I/36G+JtKGfzZ7Yd3YjUmgnyJ2lI07LMBNEz1LfpXz0Yd2yakpvktSIXdPYDz9ISGHTkxlXKzSwszIMkrFKhj24Np83Rv2PiROIwrhgBTOxGzm7j5D9CasyEllF9I6FN+FNOxAa6zPYey+/be5F7PjrjH3rZ4ixvSU+5mTgUqfVttKdQUGApJNSko6hVRJmj8EjNouAdMOVEbvbfh+223tYtxtwL8M17GdnrCTVBRFrsETLaEf8m9sIz8WduHDAenT9N3KTL83EMZPXjR0OLZXmn3dWcNOz4ZluMxBqFnUrn33CrQycMcbmZFJQn6RCQ3T20qMo0X/wvbo+hZAvo+8c70v+MF8Rz5KN1fYvIfQwSVISwwfgo="
   on:
     tags: true
     all_branches: true
