@@ -90,14 +90,14 @@ class Relay(object):
     clock = reactor
     timeout = 5
 
-    def __init__(self, heatherr_url, debug=False):
+    def __init__(self, url, debug=False):
         self.connections = {}
         self.debug = debug
-        self.heatherr_url = heatherr_url
-        pr = urlparse(heatherr_url)
+        self.url = url
+        pr = urlparse(url)
         if pr.username or pr.password:
             self.auth = (pr.username, pr.password)
-            self.heatherr_url = urlunparse((
+            self.url = urlunparse((
                 pr.scheme,
                 '%s%s' % (pr.hostname,
                           (':%s' % (pr.port,) if pr.port else '')),
@@ -187,7 +187,7 @@ class Relay(object):
     @inlineCallbacks
     def relay(self, bot_user_id, payload):
         response = yield treq.post(
-            self.heatherr_url,
+            self.url,
             auth=self.auth,
             data=json.dumps(payload),
             headers={
