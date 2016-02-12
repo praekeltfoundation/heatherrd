@@ -23,7 +23,7 @@ with open('VERSION') as fp:
 setup(
     name='heatherrd',
     version=version,
-    description="This is the heatherrd project.",
+    description="A server that relays RTM messages via HTTP.",
     long_description=readme,
     author="Praekelt Foundation",
     author_email='dev@praekeltfoundation.org',
