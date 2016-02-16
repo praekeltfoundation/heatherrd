@@ -187,6 +187,7 @@ class Relay(object):
 
     @inlineCallbacks
     def relay(self, bot_user_id, bot_user_name, payload):
+        log.msg('Request: %r' % (payload,))
         response = yield treq.post(
             self.url,
             auth=self.auth,
@@ -207,4 +208,5 @@ class Relay(object):
                 return
 
             for message in data:
+                log.msg('Reply: %r' % (message,))
                 protocol.send_message(message)
