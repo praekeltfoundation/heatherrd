@@ -91,9 +91,10 @@ class Relay(object):
     clock = reactor
     timeout = 5
 
-    def __init__(self, url, debug=False):
+    def __init__(self, url, debug=False, verbose=False):
         self.connections = {}
         self.debug = debug
+        self.verbose = verbose
         self.url = url
         pr = urlparse(url)
         if pr.username or pr.password:
@@ -109,6 +110,10 @@ class Relay(object):
             ))
         else:
             self.auth = None
+
+    def log(self, msg):
+        if self.verbose:
+            log.msg(msg)
 
     @app.handle_errors(KeyError)
     def key_error(self, request, failure):
@@ -152,7 +157,7 @@ class Relay(object):
         return protocol
 
     def remove_protocol(self, bot_id):
-        log.msg('Removing protocol for %s' % (bot_id,))
+        self.log('Removing protocol for %s' % (bot_id,))
         return self.connections.pop(bot_id, None)
 
     def get_protocol(self, bot_id, bot_token, **kwargs):
@@ -187,7 +192,7 @@ class Relay(object):
 
     @inlineCallbacks
     def relay(self, bot_user_id, bot_user_name, payload):
-        log.msg('Request: %r' % (payload,))
+        self.log('Request: %r' % (payload,))
         response = yield treq.post(
             self.url,
             auth=self.auth,
@@ -208,5 +213,5 @@ class Relay(object):
                 return
 
             for message in data:
-                log.msg('Reply: %r' % (message,))
+                self.log('Reply: %r' % (message,))
                 protocol.send_message(message)

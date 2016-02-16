@@ -32,7 +32,7 @@ def run(listen, url, verbose, debug, logfile):
     log.startLogging(logfile)
 
     endpoint = serverFromString(reactor, str(listen))
-    site = RelaySite(Relay(url, debug=debug).app.resource())
+    site = RelaySite(Relay(url, debug=debug, verbose=verbose).app.resource())
     site.verbose = verbose
     endpoint.listen(site)
     reactor.run()
