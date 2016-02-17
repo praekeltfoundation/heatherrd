@@ -164,7 +164,8 @@ class RelayTest(TestCase):
                 'X-Bot-User-Id': 'user-id',
                 'X-Bot-User-Name': 'bot-name',
             },
-            timeout=2)
+            timeout=2,
+            pool=r.pool)
 
     @patch.object(treq, 'post')
     @inlineCallbacks

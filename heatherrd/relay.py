@@ -12,6 +12,7 @@ from twisted.internet.endpoints import SSL4ClientEndpoint
 from twisted.internet.defer import succeed, inlineCallbacks
 from twisted.internet.task import LoopingCall
 from twisted.web import server
+from twisted.web.client import HTTPConnectionPool
 from twisted.python import log
 
 from .protocol import RTMProtocol, RTMFactory
@@ -96,6 +97,7 @@ class Relay(object):
         self.debug = debug
         self.verbose = verbose
         self.url = url
+        self.pool = HTTPConnectionPool(self.clock, persistent=False)
         pr = urlparse(url)
         if pr.username or pr.password:
             self.auth = (pr.username, pr.password)
@@ -175,7 +177,7 @@ class Relay(object):
         }
         params.update(kwargs)
         d = treq.post('https://slack.com/api/rtm.start',
-                      params=params)
+                      params=params, pool=self.pool, timeout=10)
         d.addCallback(lambda response: response.json())
         d.addCallback(self.connect_ws)
         return d
@@ -202,7 +204,8 @@ class Relay(object):
                 'X-Bot-User-Id': bot_user_id,
                 'X-Bot-User-Name': bot_user_name,
             },
-            timeout=2)
+            timeout=2,
+            pool=self.pool)
         headers = response.headers
         if headers.getRawHeaders('Content-Type') == ['application/json']:
             data = yield response.json()
