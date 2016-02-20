@@ -29,7 +29,7 @@ Start the echo app::
 
     $ python echo.py
 
-Have heatherrd setup the RTM session:
+Have heatherrd setup the RTM session::
 
     $ curl -X POST --user 'bot-user-id:bot-access-token' \
         http://localhost:8001/connect
@@ -47,7 +47,8 @@ incoming RTM messages as JSON to the URL provided.
 The URL can echo an array of RTM responses as JSON which will be sent back
 over the RTM connection as a reply.
 
-*Connecting a Slack account*
+Connecting a Slack account
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -55,13 +56,15 @@ over the RTM connection as a reply.
 
 This returns the session data as returned by the `rtm.start`_ API call.
 
-*Disconnecting a Slack account*
+Disconnecting a Slack account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     $ curl -XPOST http://localhost:8001/disconnect --user 'bot-user-id:bot-access-token'
 
-*Send a custom RTM message*
+Send a custom RTM message
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
