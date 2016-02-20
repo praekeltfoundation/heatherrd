@@ -81,4 +81,4 @@ example.
 
 .. _`rtm.start`: https://api.slack.com/methods/rtm.start
 .. _`echo.py`: ./echo.py
-.. _Heatherr: http://github.com/smn/heatherr
+.. _Heatherr: http://heatherr.readthedocs.org
