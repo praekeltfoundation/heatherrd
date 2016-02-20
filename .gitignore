@@ -43,3 +43,4 @@ output/*/index.html
 docs/_build
 .cache/
 /_trial_temp/
+docs/_build/
