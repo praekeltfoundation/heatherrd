@@ -25,7 +25,7 @@ Start heatherrd::
 
     $ heatherrd --url=http://localhost:8000
 
-Start the echo app::
+Start the echo app on http://localhost:8000 ::
 
     $ python echo.py
 
