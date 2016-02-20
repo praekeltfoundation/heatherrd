@@ -12,6 +12,8 @@ heatherrd
     :alt: Code Coverage
 
 A simple Python microservice that turns RTM into a synchronous HTTP interface.
+It's built for Heatherr_ which provides some commands & bot functionality for
+Praekelt's Slack accounts.
 
 ::
 
@@ -79,3 +81,4 @@ example.
 
 .. _`rtm.start`: https://api.slack.com/methods/rtm.start
 .. _`echo.py`: ./echo.py
+.. _Heatherr: http://github.com/smn/heatherr
