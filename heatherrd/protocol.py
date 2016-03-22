@@ -9,3 +9,6 @@ class RTMProtocol(WebSocketClientProtocol):
 class RTMFactory(WebSocketClientFactory):
     protocol = RTMProtocol
     noisy = False
+
+    def clientConnectionLost(self, connector, reason):
+        connector.connect()
