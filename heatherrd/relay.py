@@ -93,6 +93,7 @@ class Relay(object):
     timeout = 5
 
     def __init__(self, url, debug=False, verbose=False):
+        client._HTTP11ClientFactory.noisy = verbose
         self.connections = {}
         self.debug = debug
         self.verbose = verbose
