@@ -195,7 +195,7 @@ class Relay(object):
 
     @inlineCallbacks
     def relay(self, bot_user_id, bot_user_name, payload):
-        self.log('Relaying %r to %r' % (payload, self.url))
+        self.log('Relaying %r to %r for %r' % (payload, self.url, bot_user_id))
 
         d = treq.post(
             self.url,
