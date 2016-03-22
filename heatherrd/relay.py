@@ -196,7 +196,8 @@ class Relay(object):
     @inlineCallbacks
     def relay(self, bot_user_id, bot_user_name, payload):
         self.log('Request: %r' % (payload,))
-        response = yield treq.post(
+
+        d = treq.post(
             self.url,
             auth=self.auth,
             data=json.dumps(payload),
@@ -207,6 +208,9 @@ class Relay(object):
             },
             timeout=2,
             pool=self.pool)
+        d.addErrback(log.err)
+
+        response = yield d
         headers = response.headers
         if headers.getRawHeaders('Content-Type') == ['application/json']:
             data = yield response.json()
